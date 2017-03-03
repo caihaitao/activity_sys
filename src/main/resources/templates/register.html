@@ -1,0 +1,96 @@
+﻿<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+<HTML xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<HEAD>
+    <META content="IE=11.0000"
+          http-equiv="X-UA-Compatible"/>
+
+    <META http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <TITLE>登录页面</TITLE>
+    <script th:src="@{/js/jquery-1.9.1.min.js}"></script>
+    <script th:src="@{/js/jquery.easyui.min.js}"></script>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>
+
+    <SCRIPT type="text/javascript">
+        $(function () {
+            //得到焦点
+            $("#password,#confirmpassword").focus(function () {
+                $("#left_hand").animate({
+                    left: "150",
+                    top: " -38"
+                }, {
+                    step: function () {
+                        if (parseInt($("#left_hand").css("left")) > 140) {
+                            $("#left_hand").attr("class", "left_hand");
+                        }
+                    }
+                }, 2000);
+                $("#right_hand").animate({
+                    right: "-64",
+                    top: "-38px"
+                }, {
+                    step: function () {
+                        if (parseInt($("#right_hand").css("right")) > -70) {
+                            $("#right_hand").attr("class", "right_hand");
+                        }
+                    }
+                }, 2000);
+            });
+            //失去焦点
+            $("#password").blur(function () {
+                $("#left_hand").attr("class", "initial_left_hand");
+                $("#left_hand").attr("style", "left:100px;top:-12px;");
+                $("#right_hand").attr("class", "initial_right_hand");
+                $("#right_hand").attr("style", "right:-112px;top:-12px");
+            });
+        });
+
+
+    </SCRIPT>
+
+
+</HEAD>
+<BODY>
+<form id="registerForm" th:action="@{/regist}" th:method="post" th:object="${user}">
+    <DIV class="top_div" id="errMsg" align="center" style="color: red;font-size: medium" ></DIV>
+    <DIV style="background: rgb(255, 255, 255); margin: -100px auto auto; border: 1px solid rgb(231, 231, 231); border-image: none; width: 400px; height: 250px; text-align: center;">
+        <DIV style="width: 165px; height: 96px; position: absolute;">
+            <DIV class="tou"></DIV>
+            <DIV class="initial_left_hand" id="left_hand"></DIV>
+            <DIV class="initial_right_hand" id="right_hand"></DIV>
+        </DIV>
+        <P style="padding: 30px 0px 10px; position: relative;"><SPAN
+                class="u_logo"></SPAN>
+            <input type="text" class="ipt" id="un" th:field="*{username}" value="" placeholder="用户名" onblur="validateUsername()"/>
+            <span id="unErr" style="" color="red" ></span>
+        </P>
+        <P style="position: relative;"><SPAN
+                class="mobile_logo"></SPAN>
+            <input type="text" class="ipt" id="rn" th:field="*{realname}" value="" placeholder="真实姓名"/>
+        </P>
+
+        <P style="position: relative;"><SPAN class="p_logo"></SPAN>
+            <INPUT class="ipt" id="password" th:field="*{password}" type="password" placeholder="密码" value=""/>
+        </P>
+        <P style="position: relative;"><SPAN class="p_logo"></SPAN>
+            <INPUT class="ipt" id="confirmpassword"  type="password" placeholder="确认密码" value="" onblur="validatePwd()"/>
+        </P>
+        <P style="position: relative;"><SPAN
+                class="mobile_logo"></SPAN>
+            <input type="text" class="ipt" id="mobile" th:field="*{mobile}" value="" placeholder="手机号"/>
+        </P>
+
+        <DIV style="height: 50px; line-height: 50px; margin-top: 30px; border-top-color: rgb(231, 231, 231); border-top-width: 1px; border-top-style: solid;">
+           <SPAN>
+               <A style="background: rgb(0, 142, 173); padding: 7px 10px; border-radius: 4px; border: 1px solid rgb(26, 117, 152); border-image: none; color: rgb(255, 255, 255); font-weight: bold; cursor:pointer; margin-right: 10px;" onclick="sb()">提交</A>
+              <A style="background: rgb(0, 142, 173); padding: 7px 10px; border-radius: 4px; border: 1px solid rgb(26, 117, 152); border-image: none; color: rgb(255, 255, 255); font-weight: bold; cursor:pointer"  th:href="@{/doLogin}">返回登录</A>
+           </SPAN>
+        </DIV>
+    </DIV>
+    <div style="text-align:center;">
+    </div>
+</form>
+
+</BODY>
+<script th:src="@{/js/register.js}"></script>
+<input id="validateUsernameURL" type="hidden" th:value="@{/register/validate}" />
+</HTML>

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cc.activity.mapper.ActivityDAO" >
+  <resultMap id="BaseResultMap" type="com.cc.activity.bean.Activity" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="activityName" property="activityName" jdbcType="VARCHAR" />
+    <result column="imagePath" property="imagePath" jdbcType="VARCHAR" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="activityDate" property="activityDate" jdbcType="DATE" />
+    <result column="cost" property="cost" jdbcType="DOUBLE" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, activityName,status, imagePath, remark, activityDate,cost
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_activity
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <insert id="insert" parameterType="com.cc.activity.bean.Activity" useGeneratedKeys="true" keyProperty="id">
+    insert into t_activity (id, activityName, imagePath, 
+      remark, activityDate,status,cost)
+    values (#{id,jdbcType=INTEGER}, #{activityName,jdbcType=VARCHAR}, #{imagePath,jdbcType=VARCHAR}, 
+      #{remark,jdbcType=VARCHAR}, #{activityDate,jdbcType=DATE}, #{status,jdbcType=INTEGER},#{cost,jdbcType=DOUBLE})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.cc.activity.bean.Activity" >
+    update t_activity
+    set activityName = #{activityName,jdbcType=VARCHAR},
+    <if test="imagePath!=null and imagePath!='' ">
+      imagePath = #{imagePath,jdbcType=VARCHAR},
+    </if>
+      remark = #{remark,jdbcType=VARCHAR},
+      activityDate = #{activityDate,jdbcType=DATE},
+      cost = #{cost,jdbcType=DOUBLE}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="findAllActivities" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from t_activity
+  </select>
+  <delete id="delete">
+    delete from t_activity
+    where id = #{id,jdbcType=INTEGER}
+    and status = 0
+  </delete>
+  <delete id="deleteByIds" parameterType="java.util.List">
+    delete from t_activity
+    where id in
+    <foreach collection="ids" item="id" open="(" close=")" separator=",">
+      #{id}
+    </foreach>
+  </delete>
+</mapper>

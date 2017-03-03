@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>活动管理系统</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/demo.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/themes/easyui.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/themes/icon.css}"/>
+
+    <script th:src="@{/js/jquery-1.9.1.min.js}"></script>
+    <script type="text/javascript" th:src="@{/js/jquery.easyui.min.js}"></script>
+    <script th:src="@{/js/admin.js}"></script>
+    <style>
+        .fitem{
+            padding-top: 6px;
+        }
+    </style>
+</head>
+<body>
+<div style="margin:20px 0;"></div>
+<div class="easyui-layout" style="width:98%;height:768px;">
+    <div data-options="region:'north'" style="height:50px">
+        <div class="cs-north-logo">活动后台管理</div>
+        <div class="ui-logout">
+            <form id="logoutFm" th:action="@{/logout}">
+                <a href="#" onclick="$('#logoutFm').submit()">退出系統</a>
+            </form>
+        </div>
+    </div>
+    <div data-options="region:'south',split:true" style="height:50px;">
+        <center style="font-size: medium">
+            @caihaitao119@163.com
+        </center>
+    </div>
+    <div data-options="region:'east',split:true" title="说明" style="width:120px;">
+        <ul class="easyui-tree" data-options="url:'',method:'get',animate:true,dnd:true"></ul>
+    </div>
+    <div data-options="region:'west',split:true" title="管理" style="width:100px;">
+        <div class="easyui-accordion" data-options="fit:true,border:false">
+            <div title="项目管理" data-options="selected:true" style="padding:10px;">
+
+            </div>
+        </div>
+    </div>
+    <div data-options="region:'center',title:'数据列表',iconCls:'icon-ok'">
+        <table class="easyui-datagrid" id="list_data">
+
+        </table>
+    </div>
+
+    <div id="dlg" class="easyui-dialog" style="width: 450px; height: 250px; padding: 10px 20px;"
+         closed="true" buttons="#dlg-buttons">
+
+        <form id="fm" action="/manage/activity/add" method="post" enctype="multipart/form-data">
+            <div class="fitem">
+                <label>
+                    活动名称
+                </label>
+                <input name="activityName" id="activityName" class="easyui-validatebox" required="true"/>
+            </div>
+            <div class="fitem">
+                <label>
+                    活动时间
+                </label>
+                <input name="aDate" id="aDate" class="easyui-datebox"  required="true"/>
+            </div>
+            <div class="fitem">
+                <label>
+                    活动经费
+                </label>
+                <input name="cost" id="cost" class="easyui-numberbox"  data-options="min:0,precision:2"  required="true"/>
+            </div>
+            <div class="fitem">
+                <label>
+                    活动说明
+                </label>
+                <input name="remark" id="remark" class="easyui-validatebox"  />
+            </div>
+            <div class="fitem">
+                <label>
+                    活动图片
+                </label>
+                <input name="file" id="img" accept="image/*" type="file" class="easyui-validatebox"
+                       required="false"/>
+            </div>
+            <input type="hidden" id="id" name="id" />
+        </form>
+    </div>
+
+    <div id="dlg-buttons">
+        <a href="javascript:void(0)" class="easyui-linkbutton" onclick="save()" iconcls="icon-save">保存</a>
+        <a href="javascript:void(0)" class="easyui-linkbutton" onclick="$('#dlg').dialog('close')"
+           iconcls="icon-cancel">取消</a>
+    </div>
+</div>
+
+<input type="hidden" id="updateUrl" th:value="@{/manage/activity/update}" />
+</body>
+</html>

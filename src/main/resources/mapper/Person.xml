@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cc.person.PersonMapper">
+       <resultMap id="BaseResultMap" type="com.cc.person.Person">
+              <id column="id" property="id" jdbcType="INTEGER"/>
+              <result column="name" property="name" jdbcType="VARCHAR"/>
+              <result column="age" property="age" jdbcType="INTEGER"/>
+              <result column="country" property="country" jdbcType="VARCHAR"/>
+       </resultMap>
+
+       <sql id="BaseColumn">
+              id,name,age,country
+       </sql>
+
+       <select id="findAll" resultMap="BaseResultMap">
+              SELECT <include refid="BaseColumn" />
+              FROM t_person
+              ORDER BY id DESC
+       </select>
+
+       <insert id="add" useGeneratedKeys="true" keyProperty="id" parameterType="com.cc.person.Person">
+              INSERT into t_person(id,name,age,country)
+              VALUE (#{id},#{name},#{age},#{country})
+       </insert>
+
+       <update id="update" parameterType="com.cc.person.Person">
+              UPDATE t_person
+              SET name=#{name,jdbcType=VARCHAR},
+              age=#{age,jdbcType=INTEGER},
+              country=#{country,jdbcType=VARCHAR}
+              WHERE id = #{id,jdbcType=INTEGER}
+       </update>
+
+</mapper>

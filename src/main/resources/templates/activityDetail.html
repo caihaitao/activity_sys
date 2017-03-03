@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Spring Boot and Thymeleaf example</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/demo.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/themes/easyui.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/themes/icon.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/index.css}"/>
+    <script th:src="@{/js/jquery-1.9.1.min.js}"></script>
+    <script type="text/javascript" th:src="@{/js/jquery.easyui.min.js}"></script>
+    <script type="text/javascript" th:src="@{/js/index.js}"></script>
+    <style>
+        p{
+            padding: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<!-- <img th:attr="src=@{/upload/1.jpg},title='aa',alt='aa'"/> -->
+<div >
+    <div >
+        <h1 th:align="center" style="padding: 50px 10px 20px 10px;font-size: large" >活动详情</h1>
+        <ul th:align="center">
+            <li>
+                <a th:href="${activity.imagePath}"><img th:src="${activity.imagePath}" alt="" width="200"
+                                                         height="200" border="0"/></a>
+                <div class="prd-des">
+                    <p class="prd-name">活动名称: <span th:text="${activity.activityName}">羽毛球</span></p>
+
+                    <p class="orange">活动时间: <span th:text="${activity.activityDate}">2017-01-01</span></p>
+
+                    <p class="prd-name">报名人数: <span th:text="${totalPlayers==null?0:totalPlayers}">99</span></p>
+
+                    <p class="prd-name">报名人: 【<span th:text="${players}"></span>】</p>
+
+                </div>
+            </li>
+        </ul>
+    </div>
+    <div th:align="center" style="padding-top: 50px">
+        <a th:href="@{/index}">返回首页</a>
+    </div>
+</div>
+
+</body>
+</html>

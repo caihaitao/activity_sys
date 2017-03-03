@@ -1,0 +1,123 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title>用户管理</title>
+    <script th:src="@{/js/jquery-1.9.1.min.js}"></script>
+    <script type="text/javascript" th:src="@{/js/jquery.easyui.min.js}"></script>
+    <style type="text/css">
+        .menuDiv {
+            height: 50px;
+            width: 150px;
+            margin: auto;
+        }
+
+        .fs {
+            width: 50%;
+            margin: auto;
+        }
+
+        span {
+            color: red;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+<div class="menuDiv" id="menuDiv">
+    <a href="#" onclick="registUser();">用户注册</a><br/><br/>
+    <a href="#" onclick="resetPwd()">修改密码</a>
+</div>
+
+<div id="userRegister" style="display: none;height: 50%">
+    <form>
+        <fieldset class="fs">
+            <legend>用户注册</legend>
+            <table align="center">
+                <tr>
+                    <td>用户名：</td>
+                    <td><input type="text" name="username" id="username" onblur="validateUsername();"><span
+                            id="u1"></span></td>
+                </tr>
+                <tr>
+                    <td>密码：</td>
+                    <td><input class="input" type="password" name="pwd" id="pwd" onblur="validatePwd();"/><span
+                            id="p1"></span></td>
+                </tr>
+                <tr>
+                    <td>确认密码：</td>
+                    <td><input type="password" class="input" name="pwdConfirm" onblur="validateConfirmPwd();"
+                               id="pwdConfirm"/><span id="p2"></span></td>
+                </tr>
+                <tr>
+                    <td>角色：</td>
+                    <td>
+                        <select id="role" name="role" class="input">
+                            <option>admin</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr></tr>
+                <tr></tr>
+                <tr></tr>
+                <tr></tr>
+                <tr></tr>
+                <tr></tr>
+                <tr></tr>
+                <tr></tr>
+                <tr>
+                    <td><input type="button" value="提交" onclick="doRegistUser();"/></td>
+                    <td><input type="reset" value="重置"/></td>
+                </tr>
+            </table>
+
+        </fieldset>
+    </form>
+</div>
+
+<div id="resetPwd" style="display: none">
+    <form>
+        <fieldset class="fs">
+            <legend>修改密碼</legend>
+            <table align="center">
+                <tr>
+                    <td>用户名：</td>
+                    <td><input type="text" name="username" id="username"/><span id="u2"></span></td>
+                </tr>
+                <tr>
+                    <td>原密码：</td>
+                    <td><input class="input" type="password" name="oldPwd" id="oldPwd"/><span id="p3"></span></td>
+                </tr>
+                <tr>
+                    <td>新密码：</td>
+                    <td><input type="text" class="password" name="newPwd" id="newPwd"/><span id="p4"></span></td>
+                </tr>
+                <tr>
+                    <td>确认密码：</td>
+                    <td><input type="text" class="password" name="pwdConfirm" id="pwdConfirm"/><span id="p5"></span>
+                    </td>
+                </tr>
+
+                <tr></tr>
+                <tr></tr>
+                <tr></tr>
+                <tr></tr>
+                <tr></tr>
+                <tr></tr>
+                <tr></tr>
+                <tr></tr>
+                <tr>
+                    <td><input type="button" value="提交" onclick="reSetPwd();"/></td>
+                    <td><input type="reset" value="重置"/></td>
+                </tr>
+            </table>
+
+        </fieldset>
+    </form>
+</div>
+
+<div id="back" class="menuDiv" style="margin-top: 40px;display: none">
+    <a href="#" onclick="back();" style="text-align: center;">返回</a>
+</div>
+</body>
+</html>

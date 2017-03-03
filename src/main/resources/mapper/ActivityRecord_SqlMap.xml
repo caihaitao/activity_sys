@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cc.activity.mapper.ActivityRecordDAO" >
+  <resultMap id="BaseResultMap" type="com.cc.activity.bean.ActivityRecord" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="activityId" property="activityId" jdbcType="INTEGER" />
+    <result column="activityName" property="activityName" jdbcType="VARCHAR" />
+    <result column="activityDate" property="activityDate" jdbcType="DATE" />
+    <result column="playerId" property="playerId" jdbcType="INTEGER" />
+    <result column="playerName" property="playerName" jdbcType="VARCHAR" />
+    <result column="recordTime" property="recordTime" jdbcType="TIMESTAMP" />
+    <result column="playerMobile" property="playerMobile" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, activityId, activityName, activityDate, playerId, playerName, recordTime, playerMobile
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_activity_record
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <insert id="insert" parameterType="com.cc.activity.bean.ActivityRecord" >
+    insert into t_activity_record (id, activityId, activityName, 
+      activityDate, playerId, playerName, 
+      recordTime, playerMobile)
+    values (#{id,jdbcType=INTEGER}, #{activityId,jdbcType=INTEGER}, #{activityName,jdbcType=VARCHAR}, 
+      #{activityDate,jdbcType=DATE}, #{playerId,jdbcType=INTEGER}, #{playerName,jdbcType=VARCHAR}, 
+      #{recordTime,jdbcType=TIMESTAMP}, #{playerMobile,jdbcType=VARCHAR})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.cc.activity.bean.ActivityRecord" >
+    update t_activity_record
+    set activityId = #{activityId,jdbcType=INTEGER},
+      activityName = #{activityName,jdbcType=VARCHAR},
+      activityDate = #{activityDate,jdbcType=DATE},
+      playerId = #{playerId,jdbcType=INTEGER},
+      playerName = #{playerName,jdbcType=VARCHAR},
+      recordTime = #{recordTime,jdbcType=TIMESTAMP},
+      playerMobile = #{playerMobile,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="getActivityRecordsByActivityId" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select
+    <include refid="Base_Column_List" />
+    from t_activity_record
+    where activityId = #{activityId,jdbcType=INTEGER}
+  </select>
+  <select id="getRecordByPlayerAndActivity" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from t_activity_record
+    where  playerId = #{playerId,jdbcType=INTEGER}
+    and activityId = #{activityId,jdbcType=INTEGER}
+  </select>
+</mapper>

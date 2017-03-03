@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Spring Boot and Thymeleaf example</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/demo.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/themes/easyui.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/themes/icon.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/index.css}"/>
+    <script th:src="@{/js/jquery-1.9.1.min.js}"></script>
+    <script type="text/javascript" th:src="@{/js/jquery.easyui.min.js}"></script>
+    <script type="text/javascript" th:src="@{/js/index.js}"></script>
+</head>
+<body>
+
+<!-- <img th:attr="src=@{/upload/1.jpg},title='aa',alt='aa'"/> -->
+<div class="container gray-bg">
+    <div class="prd-list section clearfix">
+        <h2 class="welcome">欢迎您!<span style="padding-left: 10px" th:text="${#httpServletRequest.remoteUser==null ? '':#httpServletRequest.remoteUser}"></span>
+             <div  th:hidden="${#httpServletRequest.remoteUser==null}">
+                 <form id="logoutFm" th:action="@{/logout}" method="post">
+                     <a href="#" onclick="$('#logoutFm').submit()" style="font-size: 13px">退出系統</a>
+                 </form>
+             </div>
+        </h2>
+        <h2 class="title">精彩活动</h2>
+        <ul class="clearfix">
+            <tr th:each="activity,aStat : ${activities}" varStatus="status">
+                <li>
+                    <a th:href="${activity.imagePath}"><img th:src="${activity.imagePath}" alt="" width="200"
+                                                             height="200" border="0"/></a>
+                    <div class="prd-des">
+                        <p class="prd-name">活动名称: <span th:text="${activity.activityName}">羽毛球</span></p>
+
+                        <p class="orange">活动时间: <span th:text="${activity.activityDate}">2017-01-01</span></p>
+                        <p class="orange"><a th:href="@{'/activity/'+${activity.id}}">活动详情</a></p>
+                        <p><img class="vote" th:src="@{/images/sign_up.png}" alt="" border="0"/></p>
+                        <input type="hidden" name="activityId" th:value="${activity.id}"/>
+                        <input type="hidden" id="signUpURL" th:value="@{/activity/signUp}" />
+                    </div>
+                </li>
+            </tr>
+        </ul>
+    </div>
+</div>
+
+
+<div id="iv" class="iVote" hidden="hidden">
+    <img class="closeVote" th:src="@{/images/close.png}" alt="" border="0"/>
+
+    <form id="voteFm" th:action="@{/vote/doVote}" th:method="post">
+        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+        <input class="voteInputName" name="name" id="vn" />
+        <input class="voteInputPhone" name="mobile" id="vp" />
+        <input type="hidden" id="voterId" name="voterId" value=""/>
+
+        <p class="confirmVote"><img class="voteImg" th:src="@{/images/an2.png}" alt="" onclick="" border="0"/>
+        </p>
+    </form>
+</div>
+
+<div class="voteMsg" hidden="hidden" id="voteMsg" >
+    <div class="prd-des">
+        <p class="prd-name"><span id="spMsg">adfadfd</span></p>
+
+    </div>
+</div>
+
+<footer th:value="后台登陆">
+    <center>
+        <form id="loginFm" th:action="@{/doLogin}" method="post">
+            <a href="#" onclick="$('#loginFm').submit()" style="font-size: large">后台管理</a>
+        </form>
+    </center>
+</footer>
+</body>
+</html>
