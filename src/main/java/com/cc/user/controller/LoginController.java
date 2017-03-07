@@ -79,7 +79,7 @@ public class LoginController {
         return responseDTO;
     }
 
-    @RequestMapping(method = RequestMethod.POST, value = "/regist")
+    @RequestMapping(method = RequestMethod.POST, value = "/register/regist")
     @ResponseBody
     public Object registUser(User user) {
         ResponseDTO responseDTO = new ResponseDTO();
@@ -110,23 +110,4 @@ public class LoginController {
             return "login";
     }
 
-//    @RequestMapping("/logout")
-//    public String logout(HttpSession session) {
-//        if(session.getAttribute("currentUser") !=null) {
-//            session.removeAttribute("currentUser");
-//        }
-//        return "redirect:index";
-//    }
-
-    @RequestMapping(value="/dispatch", method = RequestMethod.GET)
-    public String dispatch(HttpServletRequest request) {
-       // String path = request.getContextPath() ;
-        //String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
-        Set<String> roles = AuthorityUtils.authorityListToSet(SecurityContextHolder.getContext()
-                .getAuthentication().getAuthorities());
-        if (roles.contains("ROLE_ADMIN")) {
-            return "manage/admin";
-        }
-        return "redirect:index";
-    }
 }

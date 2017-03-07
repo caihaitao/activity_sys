@@ -17,7 +17,6 @@ import java.util.Collection;
 @Component
 public class MyAuthenticationProvider implements AuthenticationProvider {
 
-    private static final Logger logger = Logger.getLogger(MyAuthenticationProvider.class);
     @Autowired
     private UserService userService;
 
@@ -38,7 +37,6 @@ public class MyAuthenticationProvider implements AuthenticationProvider {
         if (!EncryptUtils.encodeMD5String(password).equals(user.getPassword())) {
             throw new BadCredentialsException("Wrong password.");
         }
-        logger.info("username is " + user.getUsername() +","+ user.getRole()+": 验证通过" );
         Collection<? extends GrantedAuthority> authorities = user.getAuthorities();
         return new UsernamePasswordAuthenticationToken(user, password, authorities);
     }

@@ -46,7 +46,12 @@ public class ActivityController {
     @ResponseBody
     public ResponseDTO doSignUp(@RequestParam("activityId") Integer activityId, HttpSession session) {
         ResponseDTOFactory<ResponseDTO> responseDTOFactory = ResponseDTO::new;
-        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Object pp = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        UserDetails userDetails = null;
+        if(pp instanceof UserDetails) {
+            userDetails = (UserDetails)pp;
+        }
+
         if (userDetails == null) {
             return responseDTOFactory.create(false, "请登录后再报名");
         }
