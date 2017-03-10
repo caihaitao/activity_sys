@@ -106,8 +106,9 @@ public class LoginController {
     }
 
     @RequestMapping("/login")
-    public String login(User user) {
-            return "login";
+    public String login(User user,ModelMap modelMap) {
+       // modelMap.addAttribute("user", new User());
+        return "login";
     }
 
 }

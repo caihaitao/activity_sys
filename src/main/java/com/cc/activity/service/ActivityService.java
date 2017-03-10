@@ -1,6 +1,9 @@
 package com.cc.activity.service;
 
 import com.cc.activity.bean.Activity;
+import com.cc.activity.bean.ActivityTypeDTO;
+import com.cc.activity.bean.factory.ActivityTypeDTOFactory;
+import com.cc.activity.constants.ActivityTypeEnum;
 import com.cc.activity.mapper.ActivityDAO;
 import com.cc.activity.util.ActivityUtil;
 import com.cc.exception.ActivityException;
@@ -62,5 +65,12 @@ public class ActivityService {
         if(!CollectionUtils.isEmpty(ids)) {
             activityDAO.deleteByIds(ids);
         }
+    }
+
+    public List<ActivityTypeDTO> findAllActivityTypes() {
+        List<ActivityTypeEnum> activityTypeEnums = ActivityTypeEnum.getAllActicityTypes();
+        ActivityTypeDTOFactory<ActivityTypeDTO> activityTypeDTOActivityTypeDTOFactory = ActivityTypeDTO::new;
+        List<ActivityTypeDTO> activityTypeDTOs = activityTypeEnums.stream().map(s -> activityTypeDTOActivityTypeDTOFactory.create(s.getType(),s.getTypeName())).collect(Collectors.toList());
+        return activityTypeDTOs;
     }
 }

@@ -23,6 +23,7 @@ import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
+import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -61,6 +62,9 @@ public class ActivityController {
         Activity activity = activityService.selectByPrimaryKey(activityId);
         if (activity == null) {
             return responseDTOFactory.create(false, "活动不存在");
+        }
+        if(activity.getActivityDate().isBefore(LocalDate.now())) {
+            return responseDTOFactory.create(false, "活动已过期");
         }
         User currentUser = (User) userDetails;
         String playName = currentUser.getRealname() == null ? currentUser.getUsername() : currentUser.getRealname();

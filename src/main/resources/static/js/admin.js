@@ -94,7 +94,13 @@ $(function () {
 
     });
 
-    $('#list_data').datagrid({checkOnSelect:false})
+    $('#list_data').datagrid({checkOnSelect:false});
+
+    $('#activityType').combobox({
+        url:'/manage/activity/types',
+        valueField:'type',
+        textField:'typeName'
+    });
 
 });
 
@@ -126,7 +132,12 @@ function deleteRows(ids) {
             }
         },
         error: function (data) {
-            $.messager.alert("error", data)
+            console.log(data);
+            if(data.status== 405 || data.status == 403) {
+                $.messager.alert("error", '未授权的操作')
+            } else {
+                $.messager.alert("error", '系统错误')
+            }
         }
     })
 }

@@ -40,6 +40,8 @@
     select
     <include refid="Base_Column_List" />
     from t_activity
+    order by
+    activityDate desc
   </select>
   <delete id="delete">
     delete from t_activity

@@ -3,7 +3,7 @@ package com.cc.activity.controller;
 import com.cc.activity.bean.Activity;
 import com.cc.activity.service.ActivityService;
 import com.cc.activity.service.StorageService;
-import com.cc.activity.util.ActivityConstants;
+import com.cc.activity.constants.ActivityConstants;
 import com.cc.activity.util.ActivityUtil;
 import com.cc.common.model.ResponseDTO;
 import com.cc.common.model.ResponseDTOFactory;
@@ -13,6 +13,7 @@ import com.cc.exception.BizException;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.*;
@@ -55,13 +56,8 @@ public class ActivityManageController {
         return "manage/admin";
     }
 
-    @RequestMapping("/activity/findAll")
-    @ResponseBody
-    public Object findAllActivities() {
-        return activityService.getAllActivities();
-    }
-
     @RequestMapping(value = "/activity/add",method = RequestMethod.POST)
+    @PreAuthorize("hasAnyRole('admin')")
     @ResponseBody
     public Object addActivities(@RequestParam(value = "file", required = false) MultipartFile file,Activity activity,Date aDate) {
         ResponseDTOFactory<ResponseDTO> responseDTOFactory = ResponseDTO::new;
@@ -92,7 +88,20 @@ public class ActivityManageController {
         }
     }
 
+    @RequestMapping("/activity/findAll")
+    @ResponseBody
+    public Object findAllActivities() {
+        return activityService.getAllActivities();
+    }
+
+    @RequestMapping("/activity/types")
+    @ResponseBody
+    public Object findAllActivityTypes() {
+        return activityService.findAllActivityTypes();
+    }
+
     @RequestMapping(value = "/activity/delete",method = RequestMethod.POST)
+    @PreAuthorize("hasAnyRole('admin')")
     @ResponseBody
     public Object delete(@RequestParam("ids") List<Integer> ids) {
         ResponseDTOFactory<ResponseDTO> responseDTOFactory = ResponseDTO::new;
@@ -109,6 +118,7 @@ public class ActivityManageController {
     }
 
     @RequestMapping(value = "/activity/update",method = RequestMethod.POST)
+    @PreAuthorize("hasAnyRole('admin')")
     @ResponseBody
     public Object update(@RequestParam(value = "file", required = false) MultipartFile file,Activity activity,Date aDate) {
         ResponseDTOFactory<ResponseDTO> responseDTOFactory = ResponseDTO::new;

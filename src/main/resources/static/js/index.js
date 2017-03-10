@@ -14,7 +14,8 @@ $(function () {
                 }
             },
             error : function(data) {
-                alert(data)
+                console.log(data);
+                $.messager.alert('报名结果','系统错误','error');
             }
 
         })

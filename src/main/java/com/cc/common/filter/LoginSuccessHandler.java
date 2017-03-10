@@ -10,14 +10,12 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.web.DefaultRedirectStrategy;
 import org.springframework.security.web.RedirectStrategy;
-import org.springframework.security.web.WebAttributes;
 import org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.Collection;
 
@@ -39,8 +37,8 @@ public class LoginSuccessHandler extends SavedRequestAwareAuthenticationSuccessH
             throw new BadCredentialsException("Username not found.");
         }
 
-        logger.info(user.getRole()+"角色，"+user.getUsername()+" 登录，登录IP："+getIpAddress(request));
-        handle(request,response,authentication);
+        logger.info(user.getRole() + "角色，" + user.getUsername() + " 登录，登录IP：" + getIpAddress(request));
+        handle(request, response, authentication);
     }
 
     private String getIpAddress(HttpServletRequest request){
@@ -91,7 +89,7 @@ public class LoginSuccessHandler extends SavedRequestAwareAuthenticationSuccessH
         }
 
         if (isUser) {
-            return "redirect:index";
+            return "/index";
         } else if (isAdmin) {
             return "/manage/admin";
         } else {

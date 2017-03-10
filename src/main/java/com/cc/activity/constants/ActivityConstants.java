@@ -1,4 +1,4 @@
-package com.cc.activity.util;
+package com.cc.activity.constants;
 
 /**
  * Created by xn032607 on 2017/2/28.

@@ -25,6 +25,8 @@ public class Activity extends BaseObject{
 
     private double cost;
 
+    private Integer activityType;
+
     public Integer getId() {
         return id;
     }
@@ -79,5 +81,13 @@ public class Activity extends BaseObject{
 
     public void setCost(double cost) {
         this.cost = cost;
+    }
+
+    public Integer getActivityType() {
+        return activityType;
+    }
+
+    public void setActivityType(Integer activityType) {
+        this.activityType = activityType;
     }
 }

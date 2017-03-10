@@ -8,6 +8,7 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.boot.web.servlet.ServletComponentScan;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
+import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.test.context.ActiveProfiles;
 
 import java.util.Arrays;
@@ -18,6 +19,7 @@ import java.util.Arrays;
 @SpringBootApplication
 @EnableConfigurationProperties(StoragePropertiesConfig.class)
 @ServletComponentScan
+@EnableScheduling
 public class Application {
     public static void main(String[] args) {
         SpringApplication.run(Application.class,args);
