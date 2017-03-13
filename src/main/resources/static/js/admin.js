@@ -96,11 +96,11 @@ $(function () {
 
     $('#list_data').datagrid({checkOnSelect:false});
 
-    $('#activityType').combobox({
-        url:'/manage/activity/types',
-        valueField:'type',
-        textField:'typeName'
-    });
+    //$('#activityType').combobox({
+    //    url:'/manage/activity/types',
+    //    valueField:'type',
+    //    textField:'typeName'
+    //});
 
 });
 

@@ -6,8 +6,10 @@ CREATE TABLE `t_activity` (
   `activityDate` date DEFAULT NULL,
   `status` tinyint(4) DEFAULT NULL,
   `cost` double(10,2) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
+  `activityType` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `uk_date_type` (`activityDate`,`activityType`)
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8;
 
 CREATE TABLE `t_activity_record` (
   `id` int(11) NOT NULL AUTO_INCREMENT,

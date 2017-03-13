@@ -4,6 +4,7 @@ import com.cc.activity.bean.Activity;
 import com.cc.activity.bean.ActivityRecord;
 import com.cc.activity.bean.Player;
 import com.cc.activity.bean.factory.PlayerFactory;
+import com.cc.activity.constants.ActivityTypeEnum;
 import com.cc.exception.ActivityException;
 import com.cc.exception.ExceptionCode;
 import com.cc.user.bean.User;
@@ -26,6 +27,9 @@ public class ActivityUtil {
         }
         if (activity.getActivityDate() == null) {
             throw new ActivityException(ExceptionCode.ACTIVITY_DATE_ERR, "活动日期错误");
+        }
+        if (activity.getActivityType() == null || ActivityTypeEnum.getActivityTypeEnum(activity.getActivityType()) == null) {
+            throw new ActivityException(ExceptionCode.ACTIVITY_DATE_ERR, "活动类型错误");
         }
     }
 

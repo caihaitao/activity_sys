@@ -3,6 +3,7 @@ package com.cc.activity.service;
 import com.cc.activity.bean.Activity;
 import com.cc.activity.bean.ActivityTypeDTO;
 import com.cc.activity.bean.factory.ActivityTypeDTOFactory;
+import com.cc.activity.constants.ActivityConstants;
 import com.cc.activity.constants.ActivityTypeEnum;
 import com.cc.activity.mapper.ActivityDAO;
 import com.cc.activity.util.ActivityUtil;
@@ -11,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
+import java.time.LocalDate;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -72,5 +74,13 @@ public class ActivityService {
         ActivityTypeDTOFactory<ActivityTypeDTO> activityTypeDTOActivityTypeDTOFactory = ActivityTypeDTO::new;
         List<ActivityTypeDTO> activityTypeDTOs = activityTypeEnums.stream().map(s -> activityTypeDTOActivityTypeDTOFactory.create(s.getType(),s.getTypeName())).collect(Collectors.toList());
         return activityTypeDTOs;
+    }
+
+    public Activity getActivityByDateAndType(LocalDate activityDate,Integer activityType) {
+        return activityDAO.getActivityByDateAndType(activityDate,activityType);
+    }
+
+    public int inactiveActivity(LocalDate cleanDate) {
+        return activityDAO.inactiveActivity(cleanDate, ActivityConstants.INACTIVE_STATUS);
     }
 }

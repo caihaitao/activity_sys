@@ -9,9 +9,10 @@
     <result column="status" property="status" jdbcType="INTEGER" />
     <result column="activityDate" property="activityDate" jdbcType="DATE" />
     <result column="cost" property="cost" jdbcType="DOUBLE" />
+    <result column="activityType" property="activityType" jdbcType="INTEGER" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, activityName,status, imagePath, remark, activityDate,cost
+    id, activityName,status, imagePath, remark, activityDate,cost,activityType
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
@@ -21,9 +22,9 @@
   </select>
   <insert id="insert" parameterType="com.cc.activity.bean.Activity" useGeneratedKeys="true" keyProperty="id">
     insert into t_activity (id, activityName, imagePath, 
-      remark, activityDate,status,cost)
+      remark, activityDate,status,cost,activityType)
     values (#{id,jdbcType=INTEGER}, #{activityName,jdbcType=VARCHAR}, #{imagePath,jdbcType=VARCHAR}, 
-      #{remark,jdbcType=VARCHAR}, #{activityDate,jdbcType=DATE}, #{status,jdbcType=INTEGER},#{cost,jdbcType=DOUBLE})
+      #{remark,jdbcType=VARCHAR}, #{activityDate,jdbcType=DATE}, #{status,jdbcType=INTEGER},#{cost,jdbcType=DOUBLE},#{activityType,jdbcType=INTEGER})
   </insert>
   <update id="updateByPrimaryKey" parameterType="com.cc.activity.bean.Activity" >
     update t_activity
@@ -33,7 +34,8 @@
     </if>
       remark = #{remark,jdbcType=VARCHAR},
       activityDate = #{activityDate,jdbcType=DATE},
-      cost = #{cost,jdbcType=DOUBLE}
+      cost = #{cost,jdbcType=DOUBLE},
+      activityType = #{activityType,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>
   <select id="findAllActivities" resultMap="BaseResultMap">
@@ -55,4 +57,18 @@
       #{id}
     </foreach>
   </delete>
+
+  <select id="getActivityByDateAndType" resultMap="BaseResultMap" >
+    select
+    <include refid="Base_Column_List" />
+    from t_activity
+    where activityDate = #{activityDate,jdbcType=DATE}
+    and activityType = #{activityType,jdbcType=INTEGER}
+  </select>
+
+  <update id="inactiveActivity" >
+    update t_activity
+    set status = #{inactiveStatus,jdbcType=INTEGER}
+    where activityDate <![CDATA[ <= ]]> #{cleanDate,jdbcType=DATE}
+  </update>
 </mapper>

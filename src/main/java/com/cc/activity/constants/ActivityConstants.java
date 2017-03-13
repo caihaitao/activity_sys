@@ -5,4 +5,6 @@ package com.cc.activity.constants;
  */
 public interface ActivityConstants {
     int ACTIVE_STATUS = 1;
+    int INACTIVE_STATUS = 0;
+    int DEFAULT_COST = 500;
 }

@@ -48,7 +48,7 @@
         </table>
     </div>
 
-    <div id="dlg" class="easyui-dialog" style="width: 450px; height: 250px; padding: 10px 20px;"
+    <div id="dlg" class="easyui-dialog" style="width: 450px; height: 260px; padding: 10px 20px;"
          closed="true" buttons="#dlg-buttons">
 
         <form id="fm" action="/manage/activity/add" method="post" enctype="multipart/form-data">
@@ -68,7 +68,8 @@
                 <label>
                     活动类型
                 </label>
-                <input id="activityType" name="activityType" />
+                <input id="activityType" class="easyui-combobox" name="activityType" required="true" data-options="valueField:'type',textField:'typeName',url:'/manage/activity/types'" />
+                <!--<input id="activityType" name="activityType" />-->
             </div>
             <div class="fitem">
                 <label>
