@@ -1,6 +1,7 @@
 package com.cc.activity.controller;
 
 import com.cc.activity.bean.Activity;
+import com.cc.activity.constants.ActivityTypeEnum;
 import com.cc.activity.service.ActivityService;
 import com.cc.activity.service.StorageService;
 import com.cc.activity.constants.ActivityConstants;
@@ -43,8 +44,12 @@ public class ActivityManageController {
     // 图片限制大小
     @Value("${image_size}")
     public Integer imageSize;
-    @Value("${activity_default_image_path}")
-    public String defaultImagePath;
+    @Value("${activity_default_badminton_image_path}")
+    public String defaultBadmintonImagePath;
+    @Value("${activity_default_card_image_path}")
+    public String defaultCardImagePath;
+    @Value("${activity_default_swim_image_path}")
+    public String defaultSwimImagePath;
 
     @Autowired
     private StorageService fileSystemStorageService;
@@ -67,7 +72,18 @@ public class ActivityManageController {
                 activity.setActivityDate(activityDate);
             }
             ActivityUtil.validateParams(activity);
-            String activityImagePath = defaultImagePath;
+            String activityImagePath = null;
+            switch (ActivityTypeEnum.getActivityTypeEnum(activity.getActivityType())) {
+                case cards:
+                    activityImagePath = defaultCardImagePath;
+                    break;
+                case swim:
+                    activityImagePath = defaultSwimImagePath;
+                    break;
+                default:
+                    activityImagePath = defaultBadmintonImagePath;
+                    break;
+            }
             if(!file.isEmpty()) {
                 ImageUtil.checkFile(file,imageSize);
                 String fileName = fileSystemStorageService.store(file);

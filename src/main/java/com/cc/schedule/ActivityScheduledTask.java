@@ -21,8 +21,8 @@ import java.time.LocalDate;
 public class ActivityScheduledTask {
 
     private Logger logger = Logger.getLogger(getClass());
-    @Value("${activity_default_image_path}")
-    public String defaultImagePath;
+    @Value("${activity_default_badminton_image_path}")
+    public String defaultBadmintonImagePath;
 
     @Autowired
     private ActivityService activityService;
@@ -43,8 +43,7 @@ public class ActivityScheduledTask {
         }
     }
 
-   // @Scheduled(cron = "0 0/60 9 L * ?")
-    @Scheduled(cron="0/5 * *  * * ? ")
+    @Scheduled(cron = "0 0/60 0 1 * ?")
     public void cleanTask() {
         LocalDate now = LocalDate.now();
         LocalDate cleanDate = now.minusMonths(2);
@@ -60,7 +59,7 @@ public class ActivityScheduledTask {
         Activity activity = activityFactory.create();
         activity.setActivityDate(activityDate);
         activity.setStatus(ActivityConstants.ACTIVE_STATUS);
-        activity.setImagePath(defaultImagePath);
+        activity.setImagePath(defaultBadmintonImagePath);
         activity.setRemark("系统自动创建活动");
         activity.setCost(ActivityConstants.DEFAULT_COST);
         activity.setActivityType(type);

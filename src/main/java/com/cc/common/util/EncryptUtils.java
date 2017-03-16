@@ -66,7 +66,4 @@ public class EncryptUtils {
         return dstr;
     }
 
-    public static void main(String[] args) {
-        System.out.println(encodeMD5String("123321"));
-    }
 }
