@@ -2,6 +2,7 @@ package com.cc.config;
 
 import com.alibaba.druid.pool.DruidDataSource;
 import com.zaxxer.hikari.HikariDataSource;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
@@ -15,15 +16,24 @@ import java.util.Properties;
 @Configuration
 public class DataSourceConfig {
 
+    @Value("${jdbc.driverClass}")
+    private String className;
+    @Value("${jdbc.url}")
+    private String jdbcUrl;
+    @Value("${jdbc.username}")
+    private String username;
+    @Value("${jdbc.password}")
+    private String password;
+
     @Profile("development")
     @Bean(destroyMethod = "close")
     public DataSource dataSource() {
         HikariDataSource hikariDataSource = new HikariDataSource();
 
-        hikariDataSource.setDriverClassName("com.mysql.jdbc.Driver");
-        hikariDataSource.setJdbcUrl("jdbc:mysql://127.0.0.1:3306/test");
-        hikariDataSource.setUsername("root");
-        hikariDataSource.setPassword("123321");
+        hikariDataSource.setDriverClassName(className);
+        hikariDataSource.setJdbcUrl(jdbcUrl);
+        hikariDataSource.setUsername(username);
+        hikariDataSource.setPassword(password);
         hikariDataSource.setMaximumPoolSize(100);
         hikariDataSource.setMinimumIdle(10);
         hikariDataSource.setConnectionTestQuery("select 1");
@@ -41,10 +51,10 @@ public class DataSourceConfig {
     @Bean
     public DataSource druidDataSource() {
         DruidDataSource druidDataSource = new DruidDataSource();
-        druidDataSource.setDriverClassName("com.mysql.jdbc.Driver");
-        druidDataSource.setUsername("root");
-        druidDataSource.setPassword("123321");
-        druidDataSource.setUrl("jdbc:mysql://127.0.0.1:3306/test?zeroDateTimeBehavior=convertToNull&autoReconnect=true&useUnicode=true&characterEncoding=utf-8");
+        druidDataSource.setDriverClassName(className);
+        druidDataSource.setUsername(username);
+        druidDataSource.setPassword(password);
+        druidDataSource.setUrl(jdbcUrl);
         druidDataSource.setMaxActive(20);
         druidDataSource.setInitialSize(1);
         druidDataSource.setMinIdle(1);
